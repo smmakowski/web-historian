@@ -10,7 +10,7 @@ exports.handleRequest = function (req, res) {
       res.end('NO!', statusCode);
     }
     var statusCode = 200;
-    res.end(/<input/);
+    res.end(JSON.stringify(path.join(__dirname, '../archives/sites.txt')));
   } else if (req.method === 'POST') {
     /// figure it out laster
   }

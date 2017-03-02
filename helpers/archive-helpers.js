@@ -28,7 +28,7 @@ exports.initialize = function(pathsObj) {
 exports.readListOfUrls = function(callback) {
   fs.readFile(exports.paths.list, 'utf8', function(err, content) {
     if (err) {
-      callback(err, content);
+      throw err;
     } else {
       callback(content.split('\n'));
     }
@@ -52,7 +52,29 @@ exports.addUrlToList = function(url, callback) {
 };
 
 exports.isUrlArchived = function(url, callback) {
+  var isArchived = false;
+  fs.readdir(exports.paths.archivedSites, function(err, files) {
+    if (err) {
+      throw err;
+    } else {
+      for (var i = 0; i < files.length; i++) {
+        if (url === files[i]) {
+          isArchived = true;
+        }
+      }
+    }
+    callback(isArchived);
+  });
 };
 
 exports.downloadUrls = function(urls) {
+  for (var i = 0; i < urls.length; i++) {
+    fs.appendFile(exports.paths.archivedSites + '/' + urls[i], 'curl', function(err) {
+      if (err) {
+        throw err;
+      } else {
+        console.log('good job, you can do it!');
+      }
+    });
+  }
 };
