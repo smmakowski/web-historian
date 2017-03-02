@@ -1,18 +1,19 @@
 var path = require('path');
 var archive = require('../helpers/archive-helpers');
+var fs = require('fs');
 // require more modules/folders here!
 
 exports.handleRequest = function (req, res) {
-
   if (req.method === 'GET') {
-    if (!res) {
-      var statusCode = 404;
-      res.end('NO!', statusCode);
+    if (req.url === '/') {
+      fs.readFile(path.join(__dirname, '/public/index.html'), 'utf8', function(err, data) {
+        if (err) {
+          throw err;
+        } else {
+          res.end(JSON.stringify(data));
+        }
+      });
     }
-    var statusCode = 200;
-    res.end(JSON.stringify(path.join(__dirname, '../archives/sites.txt')));
-  } else if (req.method === 'POST') {
-    /// figure it out laster
-  }
+  } 
   
 };
