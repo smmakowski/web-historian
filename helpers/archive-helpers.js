@@ -70,11 +70,13 @@ exports.isUrlArchived = function(url, callback) {
 
 exports.downloadUrls = function(urls) {
   for (var i = 0; i < urls.length; i++) {
+    // make an ajx GET request
+
     fs.appendFile(exports.paths.archivedSites + '/' + urls[i], 'rum ham', function(err) {
       if (err) {
         throw err;
       } else {
-        console.log('good job, you can do it!');
+        console.log('File(s) added');
       }
     });
   }

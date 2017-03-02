@@ -18,19 +18,28 @@ exports.handleRequest = function (req, res) {
         }
       });
     } else {
-      (archive.isUrlArchived(req.url, function(boolean) {
+      console.log(req.url);
+      (archive.isUrlArchived(req.url.slice(1), function(boolean) {
         if (boolean === true) {
-    
-     
+          fs.readFile(path.join(archive.paths.archivedSites, req.url.slice(1)), 'utf8', function(err, data) {
+            if (err) {
+              res.writeHead(404, headers);
+              res.end('FAIL');
+            } else {
+              res.writeHead(200, headers);
+              res.end(JSON.stringify(data));
+            }
+          });
+
         } else {
-  
+          res.writeHead(404, headers);
+          res.end('FAIL');
         }
       }));
     }
 
   } else if (req.method === 'POST') {
-    res.writeHead(302, headers);
-    res.end(JSON.stringify('rum ham post'));
+    
   }
   
 };
