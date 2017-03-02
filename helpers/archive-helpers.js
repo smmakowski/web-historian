@@ -44,11 +44,12 @@ exports.isUrlInList = function(url, callback) {
       }
     }
     callback(inList);
+    // callback(_.contains(data, url));
   });
 };
 
 exports.addUrlToList = function(url, callback) {
-  fs.writeFile(exports.paths.list, url, 'utf8', callback);
+  fs.appendFile(exports.paths.list, url, 'utf8', callback);
 };
 
 exports.isUrlArchived = function(url, callback) {
@@ -69,7 +70,7 @@ exports.isUrlArchived = function(url, callback) {
 
 exports.downloadUrls = function(urls) {
   for (var i = 0; i < urls.length; i++) {
-    fs.appendFile(exports.paths.archivedSites + '/' + urls[i], 'curl', function(err) {
+    fs.appendFile(exports.paths.archivedSites + '/' + urls[i], 'rum ham', function(err) {
       if (err) {
         throw err;
       } else {
