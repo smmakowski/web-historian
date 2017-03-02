@@ -45,12 +45,10 @@ exports.isUrlInList = function(url, callback) {
     }
     callback(inList);
   });
-
-
-
 };
 
 exports.addUrlToList = function(url, callback) {
+  fs.writeFile(exports.paths.list, url, 'utf8', callback);
 };
 
 exports.isUrlArchived = function(url, callback) {
