@@ -49,25 +49,39 @@ exports.isUrlInList = function(url, callback) {
 };
 
 exports.addUrlToList = function(url, callback) {
-  exports.isUrlInList(url, function(boolean) {
-    if (!boolean) {
-      fs.appendFile(exports.paths.list, url, 'utf8', callback);
-    }
-  });
+  // exports.isUrlInList(url, function(boolean) {
+  //   if (!boolean) {
+  //     fs.appendFile(exports.paths.list, url, 'utf8', callback);
+  //   }
+  // });
+  fs.appendFile(exports.paths.list, url, 'utf8', callback);
+  
 };
 
 exports.isUrlArchived = function(url, callback) {
+  // var sitePath = path.join(exports.paths.archivedSites, url);
+
+  // fs.exists(sitePath, function(exists) {
+  //   callback(exists);
+  // }); 
   var isArchived = false;
-  fs.readdir(exports.paths.archivedSites, function(err, files) {
-    if (err) {
-      throw err;
-    } else {
-      for (var i = 0; i < files.length; i++) {
-        if (url === files[i]) {
-          isArchived = true;
-        }
+  fs.readdir(this.paths.archivedSites, function(err, files) {
+    console.log('path: ', exports.paths.archivedSites);
+
+
+    // callback(_.contains(files, url));
+    console.log('isUrlArchived: ', _.contains(files, url));
+    // if (err) {
+    //   throw err;
+    // } else {
+    for (var i = 0; i < files.length; i++) {
+      if (url === files[i]) {
+        isArchived = true;
       }
     }
+    // }
+    console.log('url: ', url);
+    // console.log('boolean: ', isArchived);
     callback(isArchived);
   });
 };
