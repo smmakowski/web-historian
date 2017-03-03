@@ -67,51 +67,51 @@ exports.postHandler = function (req, res, headers) {
 
   req.on('end', function() {
     archive.isUrlArchived(formUrl, function(boolean) {
-    console.log('boolean: ', boolean);
-    console.log('formUrl: ', formUrl);
-    console.log('req.url: ', req.url.slice(1));
+      console.log('boolean: ', boolean);
+      console.log('formUrl: ', formUrl);
+      console.log('req.url: ', req.url.slice(1));
     // console.log(path.paths.archivedSites);
-    if (boolean) {
-      fs.readFile(path.join(archive.paths.archivedSites, '/', formUrl), 'utf8', function(err, data) {
-        console.log(path.join(archive.paths.archivedSites, '/', formUrl));
-        if (err) {
-          res.writeHead(404, headers);
-          res.end('FAIL YEAH');
-          // check to see if the 
-        } else {
-          res.writeHead(302, headers);
-          res.end(data);
-        }
-      
-      // fs.readFile(path.join(archive.paths.archivedSites, req.url.slice(1)), 'utf8', function(err, data) {
-      //   if (err) {
-      //     res.writeHead(404, headers);
-      //     res.end('FAIL');
-      //   } else {
-      //     res.writeHead(302, headers);
-      //     res.end(data, 'utf8');
-      //   }
-      });
+      if (boolean) {
+        fs.readFile(path.join(archive.paths.archivedSites, '/', formUrl), 'utf8', function(err, data) {
+          console.log(path.join(archive.paths.archivedSites, '/', formUrl));
+          if (err) {
+            res.writeHead(404, headers);
+            res.end('FAIL YEAH');
+            // check to see if the 
+          } else {
+            res.writeHead(302, headers);
+            res.end(data);
+          }
+        
+        // fs.readFile(path.join(archive.paths.archivedSites, req.url.slice(1)), 'utf8', function(err, data) {
+        //   if (err) {
+        //     res.writeHead(404, headers);
+        //     res.end('FAIL');
+        //   } else {
+        //     res.writeHead(302, headers);
+        //     res.end(data, 'utf8');
+        //   }
+        });
 
-    } else {
+      } else {
 
 
-      archive.addUrlToList(formUrl + '\n', function() {
-        console.log('successfully added url to list');
-      });
+        archive.addUrlToList(formUrl + '\n', function() {
+          console.log('successfully added url to list');
+        });
 
-      fs.readFile(path.join(__dirname, '/public/loading.html'), 'utf8', function(err, data) {
-      
-        if (err) {
-          throw err;
-        } else {
-          res.writeHead(302, headers);
-          res.end(data, 'utf8');
-        }
+        fs.readFile(path.join(__dirname, '/public/loading.html'), 'utf8', function(err, data) {
+        
+          if (err) {
+            throw err;
+          } else {
+            res.writeHead(302, headers);
+            res.end(data, 'utf8');
+          }
 
-      });
-    }
-  });
+        });
+      }
+    });
 
   });
 
