@@ -49,7 +49,11 @@ exports.isUrlInList = function(url, callback) {
 };
 
 exports.addUrlToList = function(url, callback) {
-  fs.appendFile(exports.paths.list, url, 'utf8', callback);
+  exports.isUrlInList(url, function(boolean) {
+    if (!boolean) {
+      fs.appendFile(exports.paths.list, url, 'utf8', callback);
+    }
+  });
 };
 
 exports.isUrlArchived = function(url, callback) {
@@ -72,7 +76,8 @@ exports.downloadUrls = function(urls) {
   for (var i = 0; i < urls.length; i++) {
     // make an ajx GET request
 
-    fs.appendFile(exports.paths.archivedSites + '/' + urls[i], 'rum ham', function(err) {
+
+    fs.writeFile(exports.paths.archivedSites + '/' + urls[i], 'rum ham', function(err) {
       if (err) {
         throw err;
       } else {
